@@ -50,17 +50,17 @@ public class EnDiscOut {
     public void onChat(ClientChatReceivedEvent event) {
         if (event.message.getFormattedText().contains("§r§c[Important] §r§eThis server will restart soon:")) {
             helper.sendMessage("Detected server restart, sending webhook message...");
-            webhook.sendAnthonyPingingMessage("server restarted");
+            webhook.sendPingingMessage("server restarted");
         }
 
         if (event.message.getFormattedText().contains("§cYou are AFK. Move around to return from AFK.")) {
             helper.sendMessage("Detected AFK kick, sending webhook message...");
-            webhook.sendAnthonyPingingMessage("kicked for AFK");
+            webhook.sendPingingMessage("kicked for AFK");
         }
 
         if (event.message.getFormattedText().contains("You were spawned in Limbo.")) {
             helper.sendMessage("Detected Limbo spawn, sending webhook message...");
-            webhook.sendAnthonyPingingMessage("spawned in Limbo");
+            webhook.sendPingingMessage("spawned in Limbo");
         }
     }
 

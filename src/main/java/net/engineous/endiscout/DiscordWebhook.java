@@ -37,15 +37,7 @@ public class DiscordWebhook {
         }
     }
 
-    public void sendAnthonyPingingMessage(String message) {
+    public void sendPingingMessage(String message) {
         sendMessage(discordWebhook, "<@" + discordId + "> " + message);
-    }
-
-    public void sendKrumbitPingingMessage(String message) {
-        sendMessage(discordWebhook, "<@" + discordId + "> " + message);
-    }
-
-    public void sendKrumbitMessage(String message) {
-        sendMessage(discordWebhook, message);
     }
 }
