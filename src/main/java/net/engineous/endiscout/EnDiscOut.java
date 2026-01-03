@@ -1,6 +1,7 @@
 package net.engineous.endiscout;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 import java.io.File;
 
@@ -48,6 +50,8 @@ public class EnDiscOut {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
+        if (!helper.isHypixel()) return;
+
         if (event.message.getFormattedText().contains("§r§c[Important] §r§eThis server will restart soon:")) {
             helper.sendMessage("Detected server restart, sending webhook message...");
             webhook.sendPingingMessage("server restarted");
@@ -61,6 +65,24 @@ public class EnDiscOut {
         if (event.message.getFormattedText().contains("You were spawned in Limbo.")) {
             helper.sendMessage("Detected Limbo spawn, sending webhook message...");
             webhook.sendPingingMessage("spawned in Limbo");
+        }
+    }
+
+    @SubscribeEvent
+    public void onDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        try {
+            java.lang.reflect.Field field = event.manager.getClass().getDeclaredField("terminationReason");
+            field.setAccessible(true);
+            net.minecraft.util.IChatComponent reason = (net.minecraft.util.IChatComponent) field.get(event.manager);
+
+            if (reason instanceof ChatComponentTranslation) {
+                ChatComponentTranslation chatComponentTranslation = (ChatComponentTranslation) reason;
+                String key = chatComponentTranslation.getKey();
+                helper.sendMessage("Disconnected: " + key);
+                webhook.sendPingingMessage("Disconnected: " + key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
