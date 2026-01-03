@@ -1,0 +1,16 @@
+[
+{
+  "modid": "endiscout",
+  "name": "EnDiscOut",
+  "description": "Send Discord Webhooks for certain events",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Engineous"],
+  "credits": "Credit to Krumbit for inspiration",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
